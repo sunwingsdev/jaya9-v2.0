@@ -1,0 +1,24 @@
+ {
+      "header": {
+        "home": "বাড়ি",
+        "cricket": "ক্রিকেট",
+        "livecasino": "লাইভ ক্যাসিনো",
+        "slotgames": "স্লট গেম",
+        "tablegames": "টেবিল গেম",
+        "sports": "স্পোর্টস",
+        "fishing": "মাছ ধরা",
+        "lottery": "লটারি",
+        "crash": "ক্র্যাশ",
+        "promotion": "প্রমোশন",
+        "jayarank": "জয়া র‍্যাংক"
+      },
+      "footer": {
+        "about": "আমাদের সম্পর্কে",
+        "contact": "যোগাযোগ",
+        "privacy": "গোপনীয়তা নীতি"
+      },
+      "sidebar": {
+        "dashboard": "ড্যাশবোর্ড",
+        "settings": "সেটিংস"
+      }
+    }

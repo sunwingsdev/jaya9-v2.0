@@ -1,0 +1,23 @@
+{"header": {
+    "home": "Home",
+    "cricket": "Cricket",
+    "livecasino": "Live Casino",
+    "slotgames": "Slot Games",
+    "tablegames": "Table Games",
+    "sports": "Sports",
+    "fishing": "Fishing",
+    "lottery": "Lottery",
+    "crash": "Crash",
+    "promotion": "Promotion",
+    "jayarank": "Jaya Rank"
+  },
+  "footer": {
+    "about": "About Us",
+    "contact": "Contact",
+    "privacy": "Privacy Policy"
+  },
+  "sidebar": {
+    "dashboard": "Dashboard",
+    "settings": "Settings"
+  }
+}
