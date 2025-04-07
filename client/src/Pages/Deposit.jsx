@@ -118,7 +118,7 @@ const Deposit = () => {
     const defaultChannel = channelsData[selectedMethod]?.[0] || {};
     setSelectedChannel(defaultChannel);
     setSelectedAmount(defaultChannel.amounts ? defaultChannel.amounts[0] : "");
-  }, [selectedMethod]);
+  }, [selectedMethod, channelsData]);
 
   return (
     <div>
