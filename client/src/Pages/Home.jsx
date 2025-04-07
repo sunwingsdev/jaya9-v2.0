@@ -1,4 +1,3 @@
-
 import ImageSlider from "../components/Home/ImageSlider";
 import Marquee from "../components/Home/Marquee";
 import HomeTabs from "../components/Home/HomeTabs";
@@ -11,11 +10,11 @@ const Home = () => {
   return (
     <div>
       <ImageSlider />
-      
-      <Marquee/>
 
-      <HomeTabs language={language}/>
-      <ReferralLive language={language}/>
+      <Marquee />
+
+      <HomeTabs language={language} />
+      <ReferralLive language={language} />
     </div>
   );
 };

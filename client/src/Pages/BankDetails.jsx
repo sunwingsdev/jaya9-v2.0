@@ -29,7 +29,9 @@ const BankDetails = () => {
                       {isBengali ? "ব্যাংক ধারকের নাম" : "Account Holder Name"}
                     </th>
                     <th className="border-b border-gray-300 px-4 py-2 whitespace-nowrap">
-                      {isBengali ? "ব্যাংক একাউন্ট নম্বর" : "Bank Account Number"}
+                      {isBengali
+                        ? "ব্যাংক একাউন্ট নম্বর"
+                        : "Bank Account Number"}
                     </th>
                     <th className="border-b border-gray-300 px-4 py-2 whitespace-nowrap"></th>
                     <th className="border-b border-gray-300 px-4 py-2 whitespace-nowrap">
@@ -41,7 +43,10 @@ const BankDetails = () => {
                 </thead>
                 <tbody>
                   <tr>
-                    <td colSpan="5" className="whitespace-nowrap px-4 py-2 text-center text-gray-400">
+                    <td
+                      colSpan="5"
+                      className="whitespace-nowrap px-4 py-2 text-center text-gray-400"
+                    >
                       {isBengali
                         ? "আপনি এখনও একটি ব্যাংক অ্যাকাউন্ট সংরক্ষণ করেন নি"
                         : "You have not saved a bank account yet"}

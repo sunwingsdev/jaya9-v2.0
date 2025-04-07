@@ -99,8 +99,8 @@ const Deposit = () => {
     "Slots 100% Welcome Bonus up to ৳18,000 - 100.00%",
     "Live Casino 50% Welcome Bonus - 50.00%",
     "Slots 10% Unlimited Deposit Bonus - 10.00%",
-];
-const bonusOptions = language === "bn" ? bonusOptionsBn : bonusOptionsEn;
+  ];
+  const bonusOptions = language === "bn" ? bonusOptionsBn : bonusOptionsEn;
 
   const [balance, setBalance] = useState(Math.floor(Math.random() * 1000)); // Initial Balance
   const [loading, setLoading] = useState(false);
@@ -122,11 +122,15 @@ const bonusOptions = language === "bn" ? bonusOptionsBn : bonusOptionsEn;
 
   return (
     <div>
-      <DepositTabs language={language} activeTab={activeTab} setActiveTab={setActiveTab} />
+      <DepositTabs
+        language={language}
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+      />
 
       <div className="max-w-3xl mx-auto  ">
         <TabDeposit
-        language={language}
+          language={language}
           activeTab={activeTab}
           paymentMethods={paymentMethods}
           selectedMethod={selectedMethod}
@@ -144,31 +148,31 @@ const bonusOptions = language === "bn" ? bonusOptionsBn : bonusOptionsEn;
         />
 
         {modalOpen && (
-          <DepositModal modalOpen={modalOpen}
-          setModalOpen={setModalOpen}
-          isOpen={isOpen}
-          setIsOpen={setIsOpen}
+          <DepositModal
+            modalOpen={modalOpen}
+            setModalOpen={setModalOpen}
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
           />
         )}
 
-        <TabWithdraw 
-        activeTab={activeTab}
-        language={language}
-        paymentMethods={paymentMethods}
-        selectedMethod={selectedMethod}
-        setSelectedMethod={setSelectedMethod}
-        selectedChannel={setSelectedChannel}
-        setSelectedChannel={setSelectedChannel}
-        selectedAmount={selectedAmount}
-        setSelectedAmount={setSelectedAmount}
-        setSelectedBonus={setSelectedBonus}
-        modalOpen={modalOpen}
-        setModalOpen={setModalOpen}
-        reloadBalance={reloadBalance}
-        loading={loading}
-        balance={balance}
+        <TabWithdraw
+          activeTab={activeTab}
+          language={language}
+          paymentMethods={paymentMethods}
+          selectedMethod={selectedMethod}
+          setSelectedMethod={setSelectedMethod}
+          selectedChannel={setSelectedChannel}
+          setSelectedChannel={setSelectedChannel}
+          selectedAmount={selectedAmount}
+          setSelectedAmount={setSelectedAmount}
+          setSelectedBonus={setSelectedBonus}
+          modalOpen={modalOpen}
+          setModalOpen={setModalOpen}
+          reloadBalance={reloadBalance}
+          loading={loading}
+          balance={balance}
         />
-
       </div>
     </div>
   );

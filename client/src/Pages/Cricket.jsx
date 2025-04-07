@@ -1,4 +1,3 @@
-
 import cricketImage from "../assets/cricket.jpg";
 import FindGames from "../components/ReuseableComponents/FindGames";
 import GameOptions from "../components/ReuseableComponents/GameOptions";
@@ -8,10 +7,7 @@ import { useContext } from "react";
 
 const Cricket = () => {
   const { language } = useContext(LanguageContext);
-  const gameOptions = [
-    { id: "betswiz", label: "BETSWIZ" }
-    
-  ];
+  const gameOptions = [{ id: "betswiz", label: "BETSWIZ" }];
   return (
     <div className="">
       <div>
@@ -20,14 +16,12 @@ const Cricket = () => {
           alt=""
           className="w-full h-32 md:h-auto lg:h-auto object-cover"
         />
-       
-        <FindGames/>
 
-        
-        <GameOptions options={gameOptions}/>
+        <FindGames />
 
-        <CricketImages language={language}/>
-        
+        <GameOptions options={gameOptions} />
+
+        <CricketImages language={language} />
       </div>
     </div>
   );

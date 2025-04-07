@@ -3,7 +3,7 @@ import { LanguageContext } from "../Context/LanguageContext";
 
 const Inbox = () => {
   const { language } = useContext(LanguageContext);
-  
+
   // ইংরেজি ও বাংলা টেক্সটের জন্য অবজেক্ট
   const text = {
     inbox: language === "en" ? "Inbox" : "ইনবক্স",
@@ -28,9 +28,11 @@ const Inbox = () => {
 
           {/* শিরোনাম */}
           <div className="flex flex-row px-2 lg:px-0 items-center justify-between">
-            <h3 className="text-lg px-10 lg:pb-3 lg:p-10">{text.inboxMessages}</h3>
+            <h3 className="text-lg px-10 lg:pb-3 lg:p-10">
+              {text.inboxMessages}
+            </h3>
             <span className="lg:hidden">
-              <svg 
+              <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-5 w-5 cursor-pointer"
                 viewBox="0 0 24 24"
@@ -79,7 +81,9 @@ const Inbox = () => {
         </div>
 
         {/* বার্তা নেই অংশ */}
-        <h3 className="text-center py-3 border-b border-gray-400">{text.noMessage}</h3>
+        <h3 className="text-center py-3 border-b border-gray-400">
+          {text.noMessage}
+        </h3>
       </div>
     </div>
   );

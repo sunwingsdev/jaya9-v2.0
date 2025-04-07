@@ -8,8 +8,26 @@ const Bonus = () => {
 
   const headers =
     language === "bn"
-      ? ["তারিখ", "বৈধতার শেষ তারিখ", "যে ওয়ালেটে", "রিবেট", "রিবেট পরিমাণ", "প্রদানকারী", "বিভাগ", "স্থিতি"]
-      : ["Date", "Valid To", "To Wallet", "Rebate", "Rebate Amount", "Provider", "Category", "Status"];
+      ? [
+          "তারিখ",
+          "বৈধতার শেষ তারিখ",
+          "যে ওয়ালেটে",
+          "রিবেট",
+          "রিবেট পরিমাণ",
+          "প্রদানকারী",
+          "বিভাগ",
+          "স্থিতি",
+        ]
+      : [
+          "Date",
+          "Valid To",
+          "To Wallet",
+          "Rebate",
+          "Rebate Amount",
+          "Provider",
+          "Category",
+          "Status",
+        ];
 
   const data = [];
 
@@ -71,10 +89,14 @@ const Bonus = () => {
 
         <div className="p-3">
           <h3 className="text-black font-semibold">
-            {language === "bn" ? "মোট অনাবৃত রিবেট:" : "Total Rebate Unclaimed:"} <span>৳ NaN</span>
+            {language === "bn"
+              ? "মোট অনাবৃত রিবেট:"
+              : "Total Rebate Unclaimed:"}{" "}
+            <span>৳ NaN</span>
           </h3>
           <h3 className="text-black font-semibold">
-            {language === "bn" ? "মোট রিবেট পরিমাণ:" : "Total Rebate Amount:"} <span>৳ NaN</span>
+            {language === "bn" ? "মোট রিবেট পরিমাণ:" : "Total Rebate Amount:"}{" "}
+            <span>৳ NaN</span>
           </h3>
         </div>
 
