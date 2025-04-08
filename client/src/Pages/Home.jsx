@@ -1,9 +1,9 @@
 import ImageSlider from "../components/Home/ImageSlider";
-import Marquee from "../components/Home/Marquee";
 import HomeTabs from "../components/Home/HomeTabs";
 import ReferralLive from "../components/Home/ReferralLive";
 import { LanguageContext } from "../Context/LanguageContext";
 import { useContext } from "react";
+import NoticeMarquee from "@/components/Home/Marquee";
 
 const Home = () => {
   const { language } = useContext(LanguageContext);
@@ -11,7 +11,7 @@ const Home = () => {
     <div>
       <ImageSlider />
 
-      <Marquee />
+      <NoticeMarquee />
 
       <HomeTabs language={language} />
       <ReferralLive language={language} />

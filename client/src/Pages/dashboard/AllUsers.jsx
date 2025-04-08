@@ -146,7 +146,7 @@ const AllUsers = () => {
                     <Link to="/dashboard/user-profile">{user.username}</Link>
                   </td>
                   <td className="px-4 py-2 whitespace-nowrap border border-blue-600">
-                    {user.phone}
+                    {user.phoneNumber}
                   </td>
                   <td className="px-4 py-2 whitespace-nowrap border border-blue-600">
                     {user.email || "N/A"}

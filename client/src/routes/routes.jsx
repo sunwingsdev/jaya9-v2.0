@@ -38,6 +38,9 @@ import GamesApi from "../Pages/dashboard/GamesApi";
 import AddGameCategories from "../Pages/dashboard/AddGameCategories";
 import AdminRoute from "./AdminRoute";
 import AdminLogin from "../Pages/admin-login/AdminLogin";
+import HomeControl from "@/Pages/dashboard/HomeControl";
+import DepositMethod from "@/Pages/dashboard/DepositMethod";
+import AddGame from "@/Pages/dashboard/AddGame";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -97,6 +100,9 @@ const router = createBrowserRouter([
       { path: "inactive-games", element: <InActiveGames /> },
       { path: "games-api/:id", element: <GamesApi /> },
       { path: "add-games-categories", element: <AddGameCategories /> },
+      { path: "home-control", element: <HomeControl /> },
+      { path: "depositmethod", element: <DepositMethod /> },
+      { path: "addgame", element: <AddGame /> },
     ],
   },
   {

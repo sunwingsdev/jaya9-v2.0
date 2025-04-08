@@ -90,7 +90,7 @@ const DashboardSidebar = ({ open, setOpen, menuItems }) => {
                 ) : (
                   <div className="flex flex-col">
                     <img
-                      className="w-32"
+                      className="w-24"
                       src={`${import.meta.env.VITE_BASE_API_URL}${logo?.image}`}
                       alt="Logo"
                     />

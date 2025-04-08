@@ -1,11 +1,11 @@
 import { Link, useNavigate } from "react-router-dom";
-import Jayalogo from "../../assets/logo3.png";
 import Bdlogo from "../../assets/BD.png";
 import LoginModal from "../LoginModal/LoginModal";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { logout } from "../../redux/slices/authSlice";
 import { useFetchUser } from "../../hooks/customHook";
+import { useGetHomeControlsQuery } from "@/redux/features/allApis/homeControlApi/homeControlApi";
 
 const TopHeader = ({
   language,
@@ -18,6 +18,11 @@ const TopHeader = ({
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { fetchUser, isLoading } = useFetchUser(user?._id);
+  const { data: homeControls } = useGetHomeControlsQuery();
+
+  const logo = homeControls?.find(
+    (control) => control.category === "logo" && control.isSelected
+  );
 
   const text = {
     en: {
@@ -54,7 +59,11 @@ const TopHeader = ({
   return (
     <nav className="flex bg-common-blue justify-center lg:justify-around items-center py-2">
       <Link to="/">
-        <img src={Jayalogo} alt="Logo" className="h-8 lg:h-12" />
+        <img
+          src={`${import.meta.env.VITE_BASE_API_URL}${logo?.image}`}
+          alt="Logo"
+          className="h-8 lg:h-12"
+        />
       </Link>
 
       <ul className="hidden lg:flex space-x-2 items-center text-white font-sans text-sm">

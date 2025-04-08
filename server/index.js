@@ -20,9 +20,19 @@ const paymentNumberApi = require("./apis/paymentNumberApi/paymentNumberApi");
 const paymentMethodApi = require("./apis/paymentMethodApi/paymentMethodApi");
 const referCodeApi = require("./apis/referCodeApi/referCodeApi");
 const commissionApi = require("./apis/commissionApi/commissionApi");
+const gameApi = require("./apis/gameApi/gameApi");
 
 const corsConfig = {
-  origin: ["http://localhost:5173", "http://localhost:5174", "*"],
+  origin: [
+    "http://localhost:5173",
+    "http://localhost:5174",
+    "https://joya9.oracleapi.net",
+    "http://joya9.oracleapi.net",
+    "https://www.joya9.oracleapi.net",
+    "www.joya9.oracleapi.net",
+    "joya9.oracleapi.net",
+    "*",
+  ],
   credential: true,
   optionSuccessStatus: 200,
   methods: ["GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"],
@@ -100,6 +110,8 @@ async function run() {
       .collection("payment-methods");
     const referCodesCollection = client.db("jaya9").collection("refer-links");
     const commissionsCollection = client.db("jaya9").collection("commissions");
+    const gamesCollection = client.db("jaya9").collection("games");
+
     //collections end
 
     // APIs start
@@ -119,6 +131,7 @@ async function run() {
     app.use("/paymentmethod", paymentMethodApi(paymentMethodCollection));
     app.use("/refer-links", referCodeApi(referCodesCollection));
     app.use("/commissions", commissionApi(commissionsCollection));
+    app.use("/games", gameApi(gamesCollection));
 
     // APIs end
 

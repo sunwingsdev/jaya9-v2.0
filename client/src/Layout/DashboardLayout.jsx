@@ -108,6 +108,12 @@ const DashboardLayout = () => {
     },
     { name: "Tournament", icon: <BsShop /> },
     { name: "Jack Pot", icon: <BsShop /> },
+    // TODO: add this back when feature is ready
+    // {
+    //   name: "Add & Manage Games",
+    //   icon: <SlGameController />,
+    //   path: "/dashboard/addgame",
+    // },
     {
       name: "Frontend",
       icon: <BsFront />,
