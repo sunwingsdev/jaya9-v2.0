@@ -90,7 +90,7 @@ const depositsApi = (
           .send({ error: "Deposit is not in a pending state" });
       }
 
-      if (status === "completed") {
+      if (status === "approved") {
         let balanceIncrement = deposit.amount;
         if (deposit.promotionId) {
           const promotion = await promotionCollection.findOne({

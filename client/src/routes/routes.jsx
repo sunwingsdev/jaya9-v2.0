@@ -41,6 +41,7 @@ import AdminLogin from "../Pages/admin-login/AdminLogin";
 import HomeControl from "@/Pages/dashboard/HomeControl";
 import DepositMethod from "@/Pages/dashboard/DepositMethod";
 import AddGame from "@/Pages/dashboard/AddGame";
+import DashboardDeposits from "@/Pages/dashboard/DashboardDeposits";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -102,6 +103,7 @@ const router = createBrowserRouter([
       { path: "add-games-categories", element: <AddGameCategories /> },
       { path: "home-control", element: <HomeControl /> },
       { path: "depositmethod", element: <DepositMethod /> },
+      { path: "deposits", element: <DashboardDeposits /> },
       { path: "addgame", element: <AddGame /> },
     ],
   },

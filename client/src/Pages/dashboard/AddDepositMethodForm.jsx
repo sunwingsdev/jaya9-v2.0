@@ -1,6 +1,6 @@
-import { AiOutlinePlus, AiOutlineCamera } from "react-icons/ai";
+import { AiOutlinePlus, AiOutlineCamera, AiOutlineClose } from "react-icons/ai";
 import Swal from "sweetalert2";
-import "react-quill/dist/quill.snow.css"; // Import Quill styles
+import "react-quill/dist/quill.snow.css";
 import ReactQuill from "react-quill";
 import { useState } from "react";
 import { useAddPaymentMethodMutation } from "../../redux/features/allApis/paymentMethodApi/paymentMethodApi";
@@ -11,21 +11,24 @@ const AddDepositMethodForm = () => {
   const [addPaymentMethod, { isLoading }] = useAddPaymentMethodMutation();
   const [formData, setFormData] = useState({
     method: "",
-    channel: "agent",
-    number: "",
-    // color: "",
+    numbers: [],
     userInputs: [],
   });
   const [uploadedImage, setUploadedImage] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
   const [file, setFile] = useState(null);
   const [instruction, setInstruction] = useState("");
-  // Temporary state for the popup form
+  const [showNumberPopup, setShowNumberPopup] = useState(false);
+  const [newNumber, setNewNumber] = useState({
+    number: "",
+    channel: "agent",
+    isActive: true,
+  });
   const [newField, setNewField] = useState({
     type: "",
     isRequired: "",
     label: "",
-    width: "",
+    name: "",
     fieldInstruction: "",
   });
 
@@ -60,6 +63,56 @@ const AddDepositMethodForm = () => {
     }));
   };
 
+  // Handle number popup changes
+  const handleNumberPopupChange = (e) => {
+    const { name, value } = e.target;
+    setNewNumber((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  // Handle adding new number
+  const handleAddNumber = () => {
+    if (!newNumber.number) {
+      toast.error("Number is required");
+      return;
+    }
+
+    setFormData((prevState) => ({
+      ...prevState,
+      numbers: [...prevState.numbers, newNumber],
+    }));
+
+    setNewNumber({
+      number: "",
+      channel: "agent",
+      isActive: true,
+    });
+    setShowNumberPopup(false);
+    toast.success("Number added successfully");
+  };
+
+  // Handle deletion of a number
+  const handleDeleteNumber = (index) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "This number will be permanently deleted.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "Cancel",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        setFormData((prevState) => ({
+          ...prevState,
+          numbers: prevState.numbers.filter((_, i) => i !== index),
+        }));
+        Swal.fire("Deleted!", "Number has been removed.", "success");
+      }
+    });
+  };
+
   // Handle popup form submission
   const handlePopupSubmit = () => {
     setFormData((prevState) => ({
@@ -91,12 +144,10 @@ const AddDepositMethodForm = () => {
       cancelButtonText: "Cancel",
     }).then((result) => {
       if (result.isConfirmed) {
-        const deletedField = formData.userInputs[index];
         setFormData((prevState) => ({
           ...prevState,
-          userInputs: prevState.userInputs.filter((_, i) => i !== index), // Remove the field
+          userInputs: prevState.userInputs.filter((_, i) => i !== index),
         }));
-        console.log("Field Deleted:", deletedField);
         Swal.fire("Deleted!", "Field has been removed.", "success");
       }
     });
@@ -105,10 +156,14 @@ const AddDepositMethodForm = () => {
   // Handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if (!formData.numbers.length) {
+      toast.error("At least one number is required");
+      return;
+    }
+
     if (file) {
       const { filePath } = await uploadImage(file);
       if (filePath) {
-        // Prepare the payload
         const payload = {
           ...formData,
           image: filePath,
@@ -123,9 +178,7 @@ const AddDepositMethodForm = () => {
           toast.success("Payment method added successfully.");
           setFormData({
             method: "",
-            gateway: "agent",
-            // color: "",
-            number: "",
+            numbers: [],
             userInputs: [],
           });
           setUploadedImage(null);
@@ -205,7 +258,7 @@ const AddDepositMethodForm = () => {
           </div>
 
           {/* Gateway Details */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-1">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-1">
             <div className="flex flex-col">
               <label className="font-medium text-gray-700">Method *</label>
               <input
@@ -215,55 +268,76 @@ const AddDepositMethodForm = () => {
                 value={formData.method}
                 onChange={changeFormData}
                 placeholder="Add a method name"
-                className="border rounded-[5px] mt-[2px] px-4 py-2 focus:outline-none focus:ring-1 focus:ring-yellow-500 focus:border-yellow-500"
+                className="border border-gray-600 rounded-[5px] mt-[2px] px-4 py-2 focus:outline-none focus:ring-1 focus:ring-yellow-500 focus:border-yellow-500"
               />
             </div>
-            <div className="flex flex-col">
-              <label className="font-medium text-gray-700">Channel *</label>
-              <select
-                name="channel"
-                className="border rounded-[5px] mt-[5px] px-4 py-2 focus:outline-none focus:ring-1 focus:ring-yellow-500 focus:border-yellow-500"
-                onChange={changeFormData}
+          </div>
+
+          {/* Numbers Section */}
+          <div className="mb-6">
+            <div className="flex justify-between items-center bg-yellow-600 px-[10px] py-[5px] rounded-t-[10px]">
+              <h2 className="text-white py-2 px-4 rounded-md mb-2">
+                Payment Numbers
+              </h2>
+              <button
+                type="button"
+                className="flex items-center cursor-pointer text-white border-[1px] border-white px-[10px] py-[6px] rounded-[5px] focus:outline-none"
+                onClick={() => setShowNumberPopup(true)}
               >
-                <option selected value="agent">
-                  Agent
-                </option>
-                <option value="merchant">Merchant</option>
-                <option value="personal">Personal</option>
-              </select>
+                <AiOutlinePlus className="mr-1" /> Add Number
+              </button>
             </div>
-            <div className="flex flex-col">
-              <label className="font-medium text-gray-700">Number *</label>
-              <input
-                required
-                name="number"
-                type="text"
-                value={formData.number}
-                onChange={changeFormData}
-                placeholder="Add a deposit number"
-                className="border rounded-[5px] mt-[2px] px-4 py-2 focus:outline-none focus:ring-1 focus:ring-yellow-500 focus:border-yellow-500"
-              />
-            </div>
-            {/* <div className="flex flex-col">
-              <label className="font-medium text-gray-700">Color *</label>
-              <div className="flex items-center border-[1px] border-[#eee] rounded-md">
-                <input
-                  name="color"
-                  type="text"
-                  value={formData.color}
-                  onChange={changeFormData}
-                  className="w-full h-full outline-none px-4 py-2"
-                  placeholder="Enter color code"
-                />
-                <input
-                  name="color"
-                  type="color"
-                  value={formData.color}
-                  onChange={changeFormData}
-                  className="w-[40px] h-full outline-none"
-                />
-              </div>
-            </div> */}
+            <table className="table-auto w-full border-collapse border border-gray-200 mb-4">
+              <thead>
+                <tr className="bg-gray-100">
+                  <th className="border border-gray-200 px-4 py-2">Number</th>
+                  <th className="border border-gray-200 px-4 py-2">Channel</th>
+                  <th className="border border-gray-200 px-4 py-2">Status</th>
+                  <th className="border border-gray-200 px-4 py-2">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {formData.numbers.map((num, index) => (
+                  <tr key={index} className="text-center">
+                    <td className="border border-gray-200 px-4 py-2">
+                      {num.number}
+                    </td>
+                    <td className="border border-gray-200 px-4 py-2">
+                      {num.channel}
+                    </td>
+                    <td className="border border-gray-200 px-4 py-2">
+                      <span
+                        className={`px-2 py-1 rounded-full text-xs ${
+                          num.isActive
+                            ? "bg-green-100 text-green-800"
+                            : "bg-red-100 text-red-800"
+                        }`}
+                      >
+                        {num.isActive ? "Active" : "Inactive"}
+                      </span>
+                    </td>
+                    <td className="border border-gray-200 px-4 py-2">
+                      <button
+                        className="text-red-500 hover:text-red-600 focus:outline-none"
+                        onClick={() => handleDeleteNumber(index)}
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+                {formData.numbers.length === 0 && (
+                  <tr>
+                    <td
+                      colSpan="4"
+                      className="border border-gray-200 px-4 py-2 text-center text-gray-500"
+                    >
+                      No numbers added yet
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
           </div>
 
           {/* Deposit Instruction */}
@@ -325,7 +399,6 @@ const AddDepositMethodForm = () => {
                     <td className="border border-gray-200 px-4 py-2">
                       {field.name}
                     </td>
-
                     <td className="border border-gray-200 px-4 py-2">
                       {field.fieldInstruction || "N/A"}
                     </td>
@@ -352,6 +425,61 @@ const AddDepositMethodForm = () => {
             Submit
           </button>
         </form>
+
+        {/* Popup for Adding New Numbers */}
+        {showNumberPopup && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center z-[10] justify-center">
+            <div className="bg-white rounded-lg p-6 w-[30%] relative">
+              <button
+                onClick={() => setShowNumberPopup(false)}
+                className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
+              >
+                <AiOutlineClose size={20} />
+              </button>
+              <h3 className="text-lg font-semibold text-yellow-600 mb-4">
+                Add Payment Number
+              </h3>
+              <div className="mb-4">
+                <label className="font-medium text-gray-700">Number *</label>
+                <input
+                  name="number"
+                  type="text"
+                  className="border rounded-md px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500"
+                  value={newNumber.number}
+                  onChange={handleNumberPopupChange}
+                  placeholder="Enter payment number"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="font-medium text-gray-700">Channel *</label>
+                <select
+                  name="channel"
+                  className="border rounded-md px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500"
+                  value={newNumber.channel}
+                  onChange={handleNumberPopupChange}
+                >
+                  <option value="agent">Agent</option>
+                  <option value="merchant">Merchant</option>
+                  <option value="personal">Personal</option>
+                </select>
+              </div>
+              <div className="flex justify-end">
+                <button
+                  onClick={() => setShowNumberPopup(false)}
+                  className="text-red-600 hover:text-red-800 focus:outline-none mr-4"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleAddNumber}
+                  className="bg-yellow-600 text-white py-2 px-4 rounded-md hover:bg-yellow-800 focus:outline-none"
+                >
+                  Add Number
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Popup for Adding New Fields */}
         {showPopup && (
@@ -408,7 +536,6 @@ const AddDepositMethodForm = () => {
                   onChange={handlePopupChange}
                 />
               </div>
-
               <div className="mb-4">
                 <label className="font-medium text-gray-700">
                   Instruction (if any)
